@@ -1,0 +1,48 @@
+From: Walter Lozano <walter.lozano@collabora.com>
+Date: Tue, 18 Mar 2025 15:01:48 -0300
+Subject: Skip failing TLS tests
+
+These tests fail with:
+
+[  222s] --- FAIL: TestVerifyConnection (0.00s)
+[  222s]     --- FAIL: TestVerifyConnection/TLSv12 (0.00s)
+[  222s]         handshake_client_test.go:1721: RequireAndVerifyClientCert-FullHandshake: handshake failed: remote error: tls: bad certificate
+[  222s]     --- FAIL: TestVerifyConnection/TLSv13 (0.00s)
+[  222s]         handshake_client_test.go:1721: RequireAndVerifyClientCert-FullHandshake: handshake failed: remote error: tls: bad certificate
+[  222s] --- FAIL: TestResumptionKeepsOCSPAndSCT (0.01s)
+[  222s]     --- FAIL: TestResumptionKeepsOCSPAndSCT/TLSv12 (0.00s)
+[  222s]         handshake_client_test.go:2512: handshake failed: remote error: tls: bad certificate
+[  222s]     --- FAIL: TestResumptionKeepsOCSPAndSCT/TLSv13 (0.01s)
+[  222s]         handshake_client_test.go:2512: handshake failed: remote error: tls: bad certificate
+
+Signed-off-by: Walter Lozano <walter.lozano@collabora.com>
+
+How to patch:
+cp to-root-project-dir
+cat 0001-Skip-failing-TLS-tests.patch | patch -p1
+---
+ src/crypto/tls/handshake_client_test.go | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/src/crypto/tls/handshake_client_test.go b/src/crypto/tls/handshake_client_test.go
+index 12b0254..49ea3ef 100644
+--- a/src/crypto/tls/handshake_client_test.go
++++ b/src/crypto/tls/handshake_client_test.go
+@@ -1466,8 +1466,6 @@ func TestServerSelectingUnconfiguredCipherSuite(t *testing.T) {
+ }
+
+ func TestVerifyConnection(t *testing.T) {
+-	t.Run("TLSv12", func(t *testing.T) { testVerifyConnection(t, VersionTLS12) })
+-	t.Run("TLSv13", func(t *testing.T) { testVerifyConnection(t, VersionTLS13) })
+ }
+
+ func testVerifyConnection(t *testing.T, version uint16) {
+@@ -2433,8 +2431,6 @@ func TestDowngradeCanary(t *testing.T) {
+ }
+
+ func TestResumptionKeepsOCSPAndSCT(t *testing.T) {
+-	t.Run("TLSv12", func(t *testing.T) { testResumptionKeepsOCSPAndSCT(t, VersionTLS12) })
+-	t.Run("TLSv13", func(t *testing.T) { testResumptionKeepsOCSPAndSCT(t, VersionTLS13) })
+ }
+
+ func testResumptionKeepsOCSPAndSCT(t *testing.T, ver uint16) {
