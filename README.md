@@ -26,7 +26,23 @@
 
 Среда для сборки контейнера с зависимостями для Golang. Основан на [сборочных компонентах Google](https://go.googlesource.com/build/+/refs/heads/master/) и таблице соотношения [Debian-Astra](https://wiki.astralinux.ru/pages/viewpage.action?pageId=53646577)
 
-::include{file=docs/integration.md}
+Присоединяйтесь к нашим социальным сетям:
+
+<!-- markdownlint-disable MD033 -->
+
+<div class="badges-row-public">
+  <h4 align="center">
+    <a href="https://t.me/NGR_Softlab">
+      <img src="https://shields.io/badge/ngr-telegram-blue?logo=telegram&style=for-the-badge" alt="NGR Social Telegram" height="40" />
+    </a>
+    &emsp; &emsp; &emsp;
+    <a href="https://www.ngrsoftlab.ru/?utm_source=tg&utm_medium=start" >
+      <img src="https://shields.io/badge/ngr-web--page-yellow?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjIyLjcgMCA1MS45IDUxLjciPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNzQuNSAwSDYzLjhsMy42IDMuNWMuNy43LjcgMS45IDAgMi43LS43LjctMS45LjctMi42IDBMNTguOSAwSDUzbDE0LjUgMTMuOWMuNy43LjcgMS45IDAgMi43LS43LjctMS45LjctMi42IDBMNDkgMGgtNi44bDI1LjMgMjQuM2MuNy43LjcgMS45IDAgMi43LS43LjctMS45LjctMi42IDBMMzkgMGgtNy43bDM2LjEgMzQuN2MuNy43LjcgMS45IDAgMi42cy0xLjkuNy0yLjYgMEwyOSAwYy0zLjUuNC02LjMgMy40LTYuMyA3djQ0LjdoMTAuNmwtMy42LTMuNGMtLjctLjctLjctMS45IDAtMi42czEuOS0uNyAyLjcgMGw1LjggNmg1LjlMMjkuNyAzNy45Yy0uNy0uNy0uNy0xLjkgMC0yLjcuNy0uNyAxLjktLjcgMi43IDBsMTUuOCAxNi40SDU1TDI5LjggMjcuNGMtLjctLjctLjctMS45IDAtMi43LjctLjcgMS45LS43IDIuNyAwbDI1LjggMjYuOEg2NkwyOS45IDE2LjljLS43LS43LS43LTEuOSAwLTIuNnMxLjktLjcgMi43IDBsMzUuNyAzNy4yYzMuNS0uMyA2LjMtMy4zIDYuMy03VjB6IiBmaWxsPSIjRjhBRDAwIi8+PC9zdmc+" alt="NGR Social Media" height="40" />
+    </a>
+  </h4>
+</div>
+
+<!-- markdownlint-enable MD033 -->
 
 ## Contents
 
@@ -42,6 +58,7 @@
     - [How test local](#how-test-local)
   - [Issues and solutions](#issues-and-solutions)
   - [How to install it](#how-to-install-it)
+    - [Cya!](#cya)
 
 ## [What is it](#contents)
 
@@ -64,12 +81,10 @@ pre-commit installed at .git/hooks/commit-msg
 pre-commit installed at .git/hooks/pre-push
 ```
 
->>> [!warning] Предупреждение
-
-- Чтобы проверить свои изменения, воспользуйтесь командой `pre-commit run --all-files`
-- Чтобы проверить конкретную задачу, воспользуетесь командой `pre-commit run <target> --all-files`
-- Если Вы понимаете что творите и хотите пропустить проверку `pre-commit`-ом воспользуйтесь `--no-verify`, пример `git commit -m "Добавил изменения и не хочу проверки" --no-verify`
->>>
+> [!warning]
+> Чтобы проверить свои изменения, воспользуйтесь командой `pre-commit run --all-files`.
+> Чтобы проверить конкретную задачу, воспользуетесь командой `pre-commit run <target> --all-files`.
+> Если Вы понимаете что творите и хотите пропустить проверку `pre-commit`-ом воспользуйтесь `--no-verify`, пример `git commit -m "Добавил изменения и не хочу проверки" --no-verify`
 
 Собрать образ `Astra Linux based`
 
@@ -94,6 +109,11 @@ docker build \
 | `image_name`     |         astra         | string |                                                                                 Имя образа. |
 | `image_version`  |         1.7.5         | string |                                                                              Версия образа. |
 
+<!-- markdownlint-disable MD033 -->
+<div align="center"> <sub> Таблица 1. Переопределяемые аргументы для сборки образа. </sub> </div>
+<p>&nbsp;</p>
+<!-- markdownlint-enable MD033 -->
+
 ## [Assembly concept](#contents)
 
 Представление [Makefile-а](init/Makefile.default.mk), который используется в CI-е
@@ -101,15 +121,15 @@ docker build \
 
 ### [Assembly requirements](#contents)
 
->>> [!note] Особенности сборки
+**Особенности сборки**:
+
 Минимальная требуемая версия Go bootstrap зависит от целевой версии Go, которую необходимо собрать из исходного кода
 
-- Go <= 1.4: набор инструментов для языка C.
-- 1.5 <= Go <= 1.19: компилятор Go 1.4.
-- 1.20 <= Go <= 1.21: компилятор Go 1.17.
-- 1.22 <= Go <= 1.23: компилятор Go 1.20.
-- В дальнейшем Go версии 1.N потребует компилятор Go 1.M, где M — это N-2, округленное до четного числа. Пример: Go 1.24 и 1.25 требуют Go 1.22.
->>>
+- Go <= 1.4: набор инструментов для языка C
+- 1.5 <= Go <= 1.19: компилятор Go 1.4
+- 1.20 <= Go <= 1.21: компилятор Go 1.17
+- 1.22 <= Go <= 1.23: компилятор Go 1.20
+- В дальнейшем Go версии 1.N потребует компилятор Go 1.M, где M — это N-2, округленное до четного числа. Пример: Go 1.24 и 1.25 требуют Go 1.22
 
 Допустимые комбинации `$GOOS` и `$GOARCH`:
 
@@ -159,6 +179,11 @@ docker build \
 |  windows  |    arm    |
 |  windows  |   arm64   |
 
+<!-- markdownlint-disable MD033 -->
+<div align="center"> <sub> Таблица 2. Соотнесение переменной GOOS к переменной GOARCH. </sub> </div>
+<p>&nbsp;</p>
+<!-- markdownlint-enable MD033 -->
+
 ### [Assembly variables](#contents)
 
 Данные переменные могут использоваться как для локальной сборки, так и для сборки через CI. Данные переменные применимы и оказывают эффект на [скрипт](init/go-builder.sh). Данный скрипт работает в двух режимах:
@@ -176,6 +201,11 @@ docker build \
 | `PUBLISH_REGISTRY_UPLOAD_URL`                        |               ''               |   string   |                                                                                                                                                                    Относится к шаблону загрузки артефактов. Корневой URL до реестра артефактов. Пример: `https://my-registry:8118`. |
 | `PUBLISH_REGISTRY_UPLOAD_REPOSITORY_NAME`            |               ''               |   string   |                                                                                                                                                                                Относится к шаблону загрузки артефактов. Имя репозитория реестра, куда будет сложен артефакт сборки. |
 | `PUBLISH_REGISTRY_UPLOAD_DESTINATION_DIRECTORY_NAME` |               ''               |   string   |                                                                                                                                                                         Относится к шаблону загрузки артефактов. Имя вложенности внутри реестра, куда будет сложен артефакт сборки. |
+
+<!-- markdownlint-disable MD033 -->
+<div align="center"> <sub> Таблица 3. Переопределяемые аргументы для скрипта сборки. </sub> </div>
+<p>&nbsp;</p>
+<!-- markdownlint-enable MD033 -->
 
 ### [How test local](#contents)
 
@@ -197,8 +227,9 @@ go-builder
 
 ## [Issues and solutions](#contents)
 
-> [!caution] Негативное влияние тестов
-> При сборке golang в режиме `all.bash`(где проходят и тесты) существует данная ошибка. По сути, это не ошибка, а проблема в тех, кто пишет эти тесты. Дело в том, что они 'встраивают' [как хендшейки, так и серты внутрь](https://go.googlesource.com/go/+/refs/heads/master/src/crypto/tls/handshake_test.go), проводят их [проверку](https://go.googlesource.com/go/+/refs/heads/master/src/crypto/tls/handshake_client_test.go#1567), что приводит к их невозможности выполнения, из-за разности в датах. Решением проблемы может послужить ЯВНОЕ ИГНОРИРОВАНИЕ тестов или запуск `make.bash`, что тождественно равно в обоих случаях.
+> [!caution]
+> Негативное влияние тестов:
+> при сборке golang в режиме `all.bash`(где проходят и тесты) существует данная ошибка. По сути, это не ошибка, а проблема в тех, кто пишет эти тесты. Дело в том, что они 'встраивают' [как хендшейки, так и сертификаты внутрь](https://go.googlesource.com/go/+/refs/heads/master/src/crypto/tls/handshake_test.go), проводят их [проверку](https://go.googlesource.com/go/+/refs/heads/master/src/crypto/tls/handshake_client_test.go#1567), что приводит к их невозможности выполнения, из-за разности в датах. Решением проблемы может послужить ЯВНОЕ ИГНОРИРОВАНИЕ тестов или запуск `make.bash`, что тождественно равно в обоих случаях.
 
 - Альтернативное и, пожалуй, эффективное средство использовать [патчи](init/patches/) на нашей стороне
 
@@ -239,18 +270,17 @@ FAIL time 41.078s
 
 ## [How to install it](#contents)
 
-> [!warning] Предупреждение
+> [!warning]
 > Скачиванию подлежат артефакты, без окончания `*-bootstrap.tgz`
-<!-- markdownlint-disable-line MD028 -->
->>> [!tip] Шаги по установке продукта
+
+**Шаги по установке продукта**:
 
 1. Скачать необходимый компилятор из реестра артефактов
 2. Удалить старые бинарные файлы и экспортировать новые `rm -rf /usr/local/go && tar -C /usr/local -xzf go1.24.1-linux-amd64.tgz`
 3. Добавить новый бинарный файл в переменные среды `export PATH="${PATH}:/usr/local/go/bin"`
 4. Проверить версию установленного бинарного файла `go version`
->>>
 
-Пример:
+**Пример**:
 
 ```shell
 ## Удаляем старую версию Golang-a
@@ -270,4 +300,13 @@ go version
 go install golang.org/x/tools/gopls@latest
 ```
 
-::include{file=docs/cya.md}
+<!-- markdownlint-disable MD033 MD041 MD051 -->
+<table align="center"><tr><td align="center" width="9999">
+<img src="docs/images/panic.png" align="center"  alt="Gopher panic image">
+
+<div align="center"> <sub> Gopher Art под авторством <a href="https://GitHub.com/tottie000/GopherIllustrations/blob/main/Gopher_Illustrations/panic.png">tottie / Renée French</a>. </sub> </div>
+
+### [Cya!](#contents)
+
+</td></tr></table>
+<!-- markdownlint-enable MD033 MD041 MD051 -->
