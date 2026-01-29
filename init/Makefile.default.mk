@@ -7,3 +7,11 @@
 all:
 	@echo "starting build golang"
 	go-builder
+
+test: build ## Verify the build
+	@echo
+	@echo "Empty test"
+
+clean:
+	@echo
+	@echo "Empty clean"

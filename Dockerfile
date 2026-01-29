@@ -108,6 +108,15 @@ RUN --mount=type=bind,source=./scripts,target=/usr/local/sbin,readonly \
     && dedup-clean.sh /usr/ \
 ## Def version container
     && echo "Build Golang container version ${VERSION}" >>/etc/issue \
+## Get image package dump
+    && mkdir -p /usr/share/rocks \
+    && ( \
+        echo "# os-release" && cat /etc/os-release \
+        && echo "# dpkg-query" \
+        && dpkg-query -f \
+            '${db:Status-Abbrev},${binary:Package},${Version},${source:Package},${Source:Version}\n' \
+            -W \
+        ) >/usr/share/rocks/dpkg.query \
 ## Check can be preview /etc/issue
     && { \
         grep -qF 'cat /etc/issue' /etc/bash.bashrc \

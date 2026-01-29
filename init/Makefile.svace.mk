@@ -12,3 +12,11 @@ SHELL                         = /bin/bash
 all:
 	@echo "Build via svace wrapper"
 	@svace build $(MAKE) -f ${MAKE_BUILD_PROJECT_FILE} all >>build.log 2>&1
+
+test: build ## Verify the build
+	@echo
+	@echo "Empty test"
+
+clean:
+	@echo
+	@echo "Empty clean"
